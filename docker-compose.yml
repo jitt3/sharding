@@ -1,41 +1,42 @@
 version: "3"
 services:
   mongoOne:
-    hostname: mongodbOne
+    hostname: mongoOne
     image: mongo
     restart: always
+    entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
     environment:
-      MONGO_INITDB_DATABASE: test
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123
     ports:
       - 27018:27017
-    networks:
-      - captura
   mongoTwo:
-    hostname: mongodbTwo
+    hostname: mongoTwo
     image: mongo
     restart: always
+    entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
     environment:
-      MONGO_INITDB_DATABASE: test
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123
     ports:
       - 27019:27017
-    networks:
-      - captura
   mongoThree:
-    hostname: mongodbThree
+    hostname: mongoThree
     image: mongo
     restart: always
+    entrypoint: ["/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0"]
     environment:
-      MONGO_INITDB_DATABASE: test
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 123
     ports:
       - 27020:27017
-    networks:
-      - captura
-networks:
-  captura:
-    driver: bridge
+  mongo-express:
+    container_name: mongo-client
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: 123
+      ME_CONFIG_MONGODB_SERVER: "mongodbOne,mongodbTwo,mongodbThree"
