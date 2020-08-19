@@ -1,0 +1,41 @@
+version: "3"
+services:
+  mongoOne:
+    hostname: mongodbOne
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: test
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123
+    ports:
+      - 27018:27017
+    networks:
+      - captura
+  mongoTwo:
+    hostname: mongodbTwo
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: test
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123
+    ports:
+      - 27019:27017
+    networks:
+      - captura
+  mongoThree:
+    hostname: mongodbThree
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: test
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123
+    ports:
+      - 27020:27017
+    networks:
+      - captura
+networks:
+  captura:
+    driver: bridge
